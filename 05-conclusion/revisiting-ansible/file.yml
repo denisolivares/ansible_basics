@@ -1,0 +1,20 @@
+---
+- name: 'Create file'
+  become: true
+  hosts: node01
+  tasks:
+    - name: 'create a file and add a message'
+      lineinfile:
+        path: /opt/file.txt
+        line: 'This file is created by Ansible!'
+        create: true
+
+# Suggested solution
+---
+- hosts: node01
+  become: true
+  tasks:
+    - name: create a file
+      copy:
+        dest: /opt/file.txt
+        content: "This file is created by Ansible!"
