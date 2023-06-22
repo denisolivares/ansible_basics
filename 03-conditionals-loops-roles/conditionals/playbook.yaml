@@ -1,0 +1,32 @@
+---
+-  name: 'Execute a script on all web server nodes'
+   hosts: all
+   become: yes
+   tasks:
+     - service: 'name=nginx state=started'
+       when: 'ansible_host == "node02"'
+
+---
+- name: 'Am I an Adult or a Child?'
+  hosts: localhost
+  vars:
+    age: 25
+  tasks:
+    - name: I am a Child
+      command: 'echo "I am a Child"'
+      when: 'age < 18'
+      
+    - name: I am an Adult
+      command: 'echo "I am an Adult"'
+      when: 'age > 18'
+
+---
+- name: 'Add name server entry if not already entered'
+  hosts: localhost
+  become: yes
+  tasks:
+    - shell: 'cat /etc/resolv.conf'
+      register: command_output
+    
+    - shell: 'echo "nameserver 10.0.250.10" >> /etc/resolv.conf'
+      when: command_output.stdout.find('10.0.250.10') == -1

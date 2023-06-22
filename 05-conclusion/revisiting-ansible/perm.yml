@@ -1,0 +1,37 @@
+---
+- name: 'Create files'
+  become: true
+  hosts: web_nodes
+  tasks:
+    - name: 'Blog file'
+      file:
+        path: /opt/news/blog.txt
+        state: touch
+        group: sam
+      when: 'ansible_host == "node01"'
+    - name: 'Story file'
+      file:
+        path: /opt/news/story.txt
+        state: touch
+        owner: sam
+      when: 'ansible_host == "node02"'
+
+# Suggested solution
+---
+- hosts: node01
+  become: true
+  tasks:
+    - name: Creating blog.txt file
+      file:
+        path: /opt/news/blog.txt
+        state: touch
+        group: sam
+
+- hosts: node02
+  become: true
+  tasks:
+    - name: Creating story.txt file
+      file:
+        path: /opt/news/story.txt
+        state: touch
+        owner: sam

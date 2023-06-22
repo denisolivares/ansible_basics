@@ -1,0 +1,7 @@
+---
+- name: 'Display the contents of file /etc/resolv.conf'
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: 'Execute a command'
+      command: cat /etc/resolv.conf

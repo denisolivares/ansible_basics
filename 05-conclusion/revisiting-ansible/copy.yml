@@ -1,0 +1,20 @@
+---
+- name: 'Create file'
+  become: true
+  hosts: web_nodes
+  tasks:
+    - name: 'Copy file with owner and permissions'
+      copy:
+        src: /usr/src/blog/index.html
+        dest: /opt/blog
+        remote_src: yes
+
+# Suggested solution
+---
+- hosts: all
+  become: true
+  tasks:
+    - copy:
+        src:  /usr/src/blog/index.html
+        dest: /opt/blog
+        remote_src: yes
